@@ -1,3 +1,6 @@
+# Opendb temp files
+*.opendb
+
 # Compiled Object files
 *.slo
 *.lo
