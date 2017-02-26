@@ -30,16 +30,16 @@ int checkMove(Point currentPosition, int allowedMove, int move)
 	// 0 == cant move, 1 == north, 2 == east, 3 == south, 4 == west
 	if (currentPosition.x + 1 < worldHeight && move == 3) {
 		//south
-		if (allowedMove == 1234 || allowedMove == 13) 
+		if (allowedMove == 1234 || allowedMove == 13 || allowedMove == 3 || allowedMove == 234) 
 		{
 			return 3;
 		}
 		return 0;
 	}
 
-	else if (currentPosition.x - 1 > 0 && move == 1) {
+	else if (currentPosition.x - 1 > -1 && move == 1) {
 		//north
-		if (allowedMove == 1234 || allowedMove == 13)
+		if (allowedMove == 1234 || allowedMove == 13 || allowedMove == 1)
 		{
 			return 1;
 		}
@@ -48,16 +48,16 @@ int checkMove(Point currentPosition, int allowedMove, int move)
 	
 	else if (currentPosition.y + 1 < worldWidth && move == 2) {
 		//east
-		if (allowedMove == 1234 || allowedMove == 24)
+		if (allowedMove == 1234 || allowedMove == 24 || allowedMove == 2 || allowedMove == 234)
 		{
 			return 2;
 		}
 		return 0;
 	}
 
-	else if (currentPosition.y - 1 > 0 && move == 4) {
+	else if (currentPosition.y - 1 > -1 && move == 4) {
 		//west
-		if (allowedMove == 1234 || allowedMove == 24)
+		if (allowedMove == 1234 || allowedMove == 24 || allowedMove == 4 || allowedMove == 234)
 		{
 			return 4;
 		}

@@ -6,9 +6,9 @@ class Chunk {
 public:
 	int type;
 	
-	string getChunk(int type);
+	string getChunk();
 
-	int getMoveDiretions(int type);
+	int getMoveDiretions();
 
 };
 

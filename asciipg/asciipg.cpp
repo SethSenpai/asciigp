@@ -19,48 +19,60 @@ bool craysh = false;
 const int worldWidth = 5;
 const int worldHeight = 5;
 Chunk world[worldHeight][worldWidth];
-Point currentPosition;
+Point curPos;
+Point curPosOld;
 
 ///
 /// functions
 ///
 void populateWorld(int seed)
 {
+	Chunk p;
+	p.type = 7;
+	world[0][0] = p;
+	cout << 7 << " ";
+	int j = 1;
+
 	for (int i = 0; i < worldHeight; i++) {
-		srand(seed * i * time(NULL));
-		for (int j = 0; j < worldWidth; j++) {
+		srand(seed + time(NULL) * i);
+		for (; j < worldWidth;j++) {
 			Chunk k;
-			int w = rand() % 3;
+			int w = 0;
 			k.type = w;
 			world[i][j] = k;
-			cout << w << " ";
+			cout << w << " ";			
 		}
+		j = 0;
 		cout << endl;
 	}
 }
 
 void showCurrentChunk() {
-	string description = world[currentPosition.x][currentPosition.y].getChunk(world[currentPosition.x][currentPosition.y].type);
+	string description = world[curPos.x][curPos.y].getChunk();
 	cout << description << endl;
 }
 
 
 void movePlayer(int direction) {
 	// 0 == cant move, 1 == north, 2 == east, 3 == south, 4 == west
-	int q = checkMove(currentPosition, world[currentPosition.x][currentPosition.y].getMoveDiretions(world[currentPosition.x][currentPosition.y].type), direction);
+	int q = checkMove(curPos, world[curPos.x][curPos.y].getMoveDiretions(), direction);
 	switch (q)
 	{
 	case 1:
-		currentPosition.x--;
+		curPosOld = curPos;
+		curPos.x--;
 		break;
 	case 2:
-		currentPosition.y++;
+		curPosOld = curPos;
+		curPos.y++;
 		break;
 	case 3:
-		currentPosition.x++;
+		curPosOld = curPos;
+		curPos.x++;
 		break;
 	case 4:
-		currentPosition.y--;
+		curPosOld = curPos;
+		curPos.y--;
 		break;
 	default:
 		errorMessage(1);
@@ -77,6 +89,9 @@ void readCommand() {
 	if (coms == "exit")
 	{
 		craysh = true;
+	}
+	else if (coms == "back") {
+		curPos = curPosOld;
 	}
 
 	else if (strncmp(coms.c_str(), "move", strlen("move")) == 0) 
@@ -109,9 +124,9 @@ void readCommand() {
 int main()
 {
 	cout << "Welcome to the dungeon adventurer!" << endl << "===================================" << endl;
-	populateWorld(234);
-	currentPosition.x = 0;
-	currentPosition.y = 0;
+	populateWorld(time(NULL));
+	curPos.x = 0;
+	curPos.y = 0;
 
 	//main gameloop
 	while (craysh == false)
