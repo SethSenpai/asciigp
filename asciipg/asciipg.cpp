@@ -7,6 +7,7 @@
 #include <time.h>
 #include "WorldChunk.h"
 #include "structures.h"
+#include "ConstVar.h"
 #include "pFunc.h"
 
 using namespace std;
@@ -15,8 +16,8 @@ using namespace std;
 ///global variables
 ///
 bool craysh = false;
-const extern int worldWidth = 5;
-const extern int worldHeight = 5;
+const int worldWidth = 5;
+const int worldHeight = 5;
 Chunk world[worldHeight][worldWidth];
 Point currentPosition;
 
@@ -44,41 +45,26 @@ void showCurrentChunk() {
 }
 
 
-void errorMessage(int i)
-{
-	switch (i)
+void movePlayer(int direction) {
+	// 0 == cant move, 1 == north, 2 == east, 3 == south, 4 == west
+	int q = checkMove(currentPosition, world[currentPosition.x][currentPosition.y].getMoveDiretions(world[currentPosition.x][currentPosition.y].type), direction);
+	switch (q)
 	{
 	case 1:
-		cout << "% You can't go that way!" << endl;
+		currentPosition.x--;
 		break;
 	case 2:
-		cout << "% Move command not recognised." << endl;
+		currentPosition.y++;
 		break;
 	case 3:
-		cout << "% Command not recognised." << endl;
+		currentPosition.x++;
+		break;
+	case 4:
+		currentPosition.y--;
 		break;
 	default:
-		break;
-	}
-}
-
-void movePlayer(int direction) {
-	//1 == up, 2 == right, 3 == down, 4 == left
-	if (currentPosition.x + 1 < worldHeight && direction == 1) {
-		currentPosition.x++;
-	}
-	else if (currentPosition.y + 1 < worldWidth && direction == 2) {
-		currentPosition.y++;
-	}
-	else if (currentPosition.x - 1 > 0 && direction == 3) {
-		currentPosition.x--;
-	}
-	else if (currentPosition.y - 1 > 0 && direction == 4) {
-		currentPosition.y--;
-	}
-	else
-	{
 		errorMessage(1);
+		break;
 	}
 }
 
@@ -97,16 +83,16 @@ void readCommand() {
 	{
 		string dir = coms.substr(5,1);
 		
-		if (dir == "u") {
+		if (dir == "n") {
 			movePlayer(1);
 		}
-		else if (dir == "r") {
+		else if (dir == "e") {
 			movePlayer(2);
 		}
-		else if (dir == "d") {
+		else if (dir == "s") {
 			movePlayer(3);
 		}
-		else if (dir == "l") {
+		else if (dir == "w") {
 			movePlayer(4);
 		}
 		else

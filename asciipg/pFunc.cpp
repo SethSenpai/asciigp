@@ -1,19 +1,71 @@
 #include "stdafx.h"
 #include "pFunc.h"
 #include "Structures.h"
+#include "ConstVar.h"
+#include <iostream>
 
-pFunc::pFunc()
-{
-}
+using std::cout;
+using std::endl;
 
-bool pFunc::checkMove(Point currentPosition, int allowedMove, int move)
+void errorMessage(int i)
 {
-	if (currentPosition.x + 1 < worldHeight && move == 1) {
-		return true;
+	switch (i)
+	{
+	case 1:
+		cout << "% You can't go that way!" << endl;
+		break;
+	case 2:
+		cout << "% Move command not recognised." << endl;
+		break;
+	case 3:
+		cout << "% Command not recognised." << endl;
+		break;
+	default:
+		break;
 	}
 }
 
-
-pFunc::~pFunc()
+int checkMove(Point currentPosition, int allowedMove, int move)
 {
+	// 0 == cant move, 1 == north, 2 == east, 3 == south, 4 == west
+	if (currentPosition.x + 1 < worldHeight && move == 3) {
+		//south
+		if (allowedMove == 1234 || allowedMove == 13) 
+		{
+			return 3;
+		}
+		return 0;
+	}
+
+	else if (currentPosition.x - 1 > 0 && move == 1) {
+		//north
+		if (allowedMove == 1234 || allowedMove == 13)
+		{
+			return 1;
+		}
+		return 0;
+	}
+	
+	else if (currentPosition.y + 1 < worldWidth && move == 2) {
+		//east
+		if (allowedMove == 1234 || allowedMove == 24)
+		{
+			return 2;
+		}
+		return 0;
+	}
+
+	else if (currentPosition.y - 1 > 0 && move == 4) {
+		//west
+		if (allowedMove == 1234 || allowedMove == 24)
+		{
+			return 4;
+		}
+		return 0;
+	}
+	else
+	{
+		return 0;
+	}
+
 }

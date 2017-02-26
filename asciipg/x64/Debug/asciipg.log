@@ -1,0 +1,6 @@
+﻿  pFunc.cpp
+  asciipg.cpp
+d:\documents\asciipg\asciipg\asciipg.cpp(30): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  asciipg.vcxproj -> D:\Documents\asciipg\x64\Debug\asciipg.exe
+  asciipg.vcxproj -> D:\Documents\asciipg\x64\Debug\asciipg.pdb (Full PDB)

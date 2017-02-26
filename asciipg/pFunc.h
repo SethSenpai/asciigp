@@ -1,9 +1,4 @@
 #pragma once
-class pFunc
-{
-public:
-	pFunc();
-	bool checkMove(Point currentPosition, int allowedMove, int move);
-	~pFunc();
-};
-
+#include "Structures.h"
+	int checkMove(Point currentPosition, int allowedMove, int move);
+	void errorMessage(int i);

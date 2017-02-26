@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstVar.h" />
     <ClInclude Include="pFunc.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Structures.h" />
