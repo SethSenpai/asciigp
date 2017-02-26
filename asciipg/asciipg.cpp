@@ -4,8 +4,10 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "WorldChunk.h"
 #include "structures.h"
+#include "pFunc.h"
 
 using namespace std;
 
@@ -13,8 +15,8 @@ using namespace std;
 ///global variables
 ///
 bool craysh = false;
-const int worldWidth = 3;
-const int worldHeight = 5;
+const extern int worldWidth = 5;
+const extern int worldHeight = 5;
 Chunk world[worldHeight][worldWidth];
 Point currentPosition;
 
@@ -24,12 +26,15 @@ Point currentPosition;
 void populateWorld(int seed)
 {
 	for (int i = 0; i < worldHeight; i++) {
+		srand(seed * i * time(NULL));
 		for (int j = 0; j < worldWidth; j++) {
-			srand(seed);
 			Chunk k;
-			k.type = rand() % 3;			
+			int w = rand() % 3;
+			k.type = w;
 			world[i][j] = k;
+			cout << w << " ";
 		}
+		cout << endl;
 	}
 }
 
@@ -44,10 +49,13 @@ void errorMessage(int i)
 	switch (i)
 	{
 	case 1:
-		cout << "You can't go that way!" << endl;
+		cout << "% You can't go that way!" << endl;
 		break;
 	case 2:
-		cout << "move command not recognised." << endl;
+		cout << "% Move command not recognised." << endl;
+		break;
+	case 3:
+		cout << "% Command not recognised." << endl;
 		break;
 	default:
 		break;
@@ -56,16 +64,16 @@ void errorMessage(int i)
 
 void movePlayer(int direction) {
 	//1 == up, 2 == right, 3 == down, 4 == left
-	if (currentPosition.x + 1 <= worldWidth && direction == 1) {
+	if (currentPosition.x + 1 < worldHeight && direction == 1) {
 		currentPosition.x++;
 	}
-	else if (currentPosition.y + 1 <= worldWidth && direction == 2) {
+	else if (currentPosition.y + 1 < worldWidth && direction == 2) {
 		currentPosition.y++;
 	}
-	else if (currentPosition.x - 1 >= 0 && direction == 3) {
+	else if (currentPosition.x - 1 > 0 && direction == 3) {
 		currentPosition.x--;
 	}
-	else if (currentPosition.y - 1 >= 0 && direction == 4) {
+	else if (currentPosition.y - 1 > 0 && direction == 4) {
 		currentPosition.y--;
 	}
 	else
@@ -85,7 +93,7 @@ void readCommand() {
 		craysh = true;
 	}
 
-	if (strncmp(coms.c_str(), "move", strlen("move")) == 0) 
+	else if (strncmp(coms.c_str(), "move", strlen("move")) == 0) 
 	{
 		string dir = coms.substr(5,1);
 		
@@ -105,6 +113,9 @@ void readCommand() {
 		{
 			errorMessage(2);
 		}
+	}
+	else {
+		errorMessage(3);
 	}
 }
 
